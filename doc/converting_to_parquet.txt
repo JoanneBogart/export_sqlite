@@ -1,0 +1,232 @@
+(lsst-scipipe-1172c30) bash-4.2$ python parquet_utils.py ${STAR_DIR}/star_lc_stats_trimmed.db --table stellar_variability_stats --pqfile ${STAR_DIR}/star_lc_stats_trimmed.parquet 
+WARNING: AstropyDeprecationWarning: astropy.extern.six will be removed in 4.0, use the six module directly if it is still needed [astropy.extern.six]
+2020-04-29 16:29:42   parquet_utils.py  invoked  with arguments
+check: False
+dbfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_lc_stats_trimmed.db
+id_column: None
+max_group_gbyte: 1.0
+n_check: 10
+n_group: None
+pqfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_lc_stats_trimmed.parquet
+table: stellar_variability_stats
+For key mean_u found unknown type , setting to float32
+For key mean_g found unknown type , setting to float32
+For key mean_r found unknown type , setting to float32
+For key mean_i found unknown type , setting to float32
+For key mean_z found unknown type , setting to float32
+For key mean_y found unknown type , setting to float32
+For key stdev_u found unknown type , setting to float32
+For key stdev_g found unknown type , setting to float32
+For key stdev_r found unknown type , setting to float32
+For key stdev_i found unknown type , setting to float32
+For key stdev_z found unknown type , setting to float32
+For key stdev_y found unknown type , setting to float32
+column_dict: 
+id  :  string  : 
+model  :  string  : 
+mean_u  :  float32  : 
+mean_g  :  float32  : 
+mean_r  :  float32  : 
+mean_i  :  float32  : 
+mean_z  :  float32  : 
+mean_y  :  float32  : 
+stdev_u  :  float32  : 
+stdev_g  :  float32  : 
+stdev_r  :  float32  : 
+stdev_i  :  float32  : 
+stdev_z  :  float32  : 
+stdev_y  :  float32  : 
+pyarrow.Field<id: string>
+pyarrow.Field<model: string>
+pyarrow.Field<mean_u: float>
+pyarrow.Field<mean_g: float>
+pyarrow.Field<mean_r: float>
+pyarrow.Field<mean_i: float>
+pyarrow.Field<mean_z: float>
+pyarrow.Field<mean_y: float>
+pyarrow.Field<stdev_u: float>
+pyarrow.Field<stdev_g: float>
+pyarrow.Field<stdev_r: float>
+pyarrow.Field<stdev_i: float>
+pyarrow.Field<stdev_z: float>
+pyarrow.Field<stdev_y: float>
+
+Fetch command is:
+ select * from stellar_variability_stats order by id
+Type of data  <class 'list'>
+len of data  14
+An item:  100654988  its type:  <class 'str'>
+An item:  None  its type:  <class 'str'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+An item:  0.0  its type:  <class 'float'>
+100654988
+Conversion successful
+
+
+----------
+
+(lsst-scipipe-1172c30) bash-4.2$ python parquet_utils.py ${STAR_DIR}/star_variability_truth.db --table stellar_variability_truth --pqfile ${STAR_DIR}/star_variability_truth.parquet --n-group 30 --max-group-gbyte 1.5
+WARNING: AstropyDeprecationWarning: astropy.extern.six will be removed in 4.0, use the six module directly if it is still needed [astropy.extern.six]
+2020-04-29 16:39:57   parquet_utils.py  invoked  with arguments
+check: False
+dbfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_variability_truth.db
+id_column: None
+max_group_gbyte: 1.5
+n_check: 10
+n_group: 30
+pqfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_variability_truth.parquet
+table: stellar_variability_truth
+For key obsHistID found unknown type INTEGER, setting to float32
+column_dict: 
+id  :  string  : 
+obsHistID  :  float32  : 
+MJD  :  float32  : 
+bandpass  :  string  : 
+delta_flux  :  float32  : 
+pyarrow.Field<id: string>
+pyarrow.Field<obsHistID: float>
+pyarrow.Field<MJD: float>
+pyarrow.Field<bandpass: string>
+pyarrow.Field<delta_flux: float>
+
+Fetch command is:
+ select * from stellar_variability_truth order by id
+
+FAILED, probably because sqlite file was too big to fetch all data at once.
+
+Revised code to only select a chunk at a time and tried again:
+
+(lsst-scipipe-1172c30) bash-4.2$ python parquet_utils.py ${STAR_DIR}/star_variability_truth.db --table stellar_variability_truth --pqfile ${STAR_DIR}/star_variability_truth.parquet --n-group 50 --max-group-gbyte 1.5
+WARNING: AstropyDeprecationWarning: astropy.extern.six will be removed in 4.0, use the six module directly if it is still needed [astropy.extern.six]
+2020-04-29 17:14:36   parquet_utils.py  invoked  with arguments
+check: False
+dbfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_variability_truth.db
+id_column: None
+max_group_gbyte: 1.5
+n_check: 10
+n_group: 50
+pqfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_variability_truth.parquet
+table: stellar_variability_truth
+column_dict: 
+id  :  string  : 
+obsHistID  :  int32  : 
+MJD  :  float32  : 
+bandpass  :  string  : 
+delta_flux  :  float32  : 
+pyarrow.Field<id: string>
+pyarrow.Field<obsHistID: int32>
+pyarrow.Field<MJD: float>
+pyarrow.Field<bandpass: string>
+pyarrow.Field<delta_flux: float>
+
+Fetch command is:
+ select * from stellar_variability_truth where rowid > 0 and rowid <= 24186432 order by id
+Type of data  <class 'list'>
+len of data  5
+An item:  1247206725  its type:  <class 'str'>
+An item:  6830  its type:  <class 'int'>
+An item:  59589.202717  its type:  <class 'float'>
+An item:  i  its type:  <class 'str'>
+An item:  -56.45984317633143  its type:  <class 'float'>
+1247206725
+
+Fetch command is:
+ select * from stellar_variability_truth where rowid > 24186432 and rowid <= 48372864 order by id
+Type of data  <class 'list'>
+len of data  5
+An item:  1242622556  its type:  <class 'str'>
+An item:  7236  its type:  <class 'int'>
+An item:  59590.060433  its type:  <class 'float'>
+An item:  y  its type:  <class 'str'>
+An item:  -102.74599847679832  its type:
+1242622556
+
+Fetch command is:
+ select * from stellar_variability_truth where rowid > 48372864 and rowid <= 72559296 order by id
+Type of data  <class 'list'>
+len of data  5
+An item:  1242662847  its type:  <class 'str'>
+An item:  60783  its type:  <class 'int'>
+An item:  59659.007327  its type:  <class 'float'>
+An item:  y  its type:  <class 'str'>
+An item:  255.47323614702316  its type:  <class 'float'>
+1242662847
+
+Fetch command is:
+ select * from stellar_variability_truth where rowid > 72559296 and rowid <= 96745728 order by id
+Type of data  <class 'list'>
+len of data  5
+An item:  1247395294  its type:  <class 'str'>
+An item:  3029  its type:  <class 'int'>
+An item:  59584.109292  its type:  <class 'float'>
+An item:  u  its type:  <class 'str'>
+An item:  4.514030224699828  its type:  <class 'float'>
+1247395294
+
+Fetch command is:
+ select * from stellar_variability_truth where rowid > 96745728 and rowid <= 120932160 order by id
+
+
+Two problems detected:
+
+default 'order by' column should be rowid
+
+parquet file was getting overwritten with each chunk rather than appending
+
+--
+
+Attempt #3:
+(lsst-scipipe-1172c30) bash-4.2$ python parquet_utils.py ${STAR_DIR}/star_variability_truth.db --table stellar_variability_truth --pqfile ${STAR_DIR}/star_variability_truth.parquet --n-group 30 --max-group-gbyte 1.5
+WARNING: AstropyDeprecationWarning: astropy.extern.six will be removed in 4.0, use the six module directly if it is still needed [astropy.extern.six]
+2020-04-29 17:44:27   parquet_utils.py  invoked  with arguments
+check: False
+dbfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_variability_truth.db
+id_column: None
+max_group_gbyte: 1.5
+n_check: 10
+n_group: 30
+pqfile: /global/cfs/cdirs/lsst/catalogs/production-DC2_ImSim/Run2.2i/startruth/star_variability_truth.parquet
+table: stellar_variability_truth
+
+This seems to be working better.  Output parquet file is increasing in size.  But is going to be
+significantly smaller than input sqlite.
+
+
+..ending with harmless failure
+Fetch command is:
+ select * from stellar_variability_truth where rowid > 1128700160 and rowid <= 1169010880 order by rowid
+Type of data  <class 'list'>
+len of data  5
+An item:  1247330900  its type:  <class 'str'>
+An item:  1632330  its type:  <class 'int'>
+An item:  62014.318386  its type:  <class 'float'>
+An item:  i  its type:  <class 'str'>
+An item:  -5230.803398776924  its type:  <class 'float'>
+1247330900
+
+Fetch command is:
+ select * from stellar_variability_truth where rowid > 1169010880 and rowid <= 1209321593 order by rowid
+Type of data  <class 'list'>
+len of data  5
+An item:  31107934933  its type:  <class 'str'>
+An item:  1200120  its type:  <class 'int'>
+An item:  61338.170978  its type:  <class 'float'>
+An item:  z  its type:  <class 'str'>
+An item:  89.14217599740746  its type:  <class 'float'>
+31107934933
+Traceback (most recent call last):
+  File "parquet_utils.py", line 258, in <module>
+    max_group_gbyte=args.max_group_gbyte, order_by = 'rowid')
+  File "parquet_utils.py", line 120, in convert_sqlite_to_parquet
+    done = true
+NameError: name 'true' is not defined
