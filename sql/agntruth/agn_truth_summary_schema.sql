@@ -1,4 +1,4 @@
-CEATE SCHEMA IF NOT EXISTS agn_truth
+CREATE SCHEMA IF NOT EXISTS agn_truth;
 CREATE TABLE agn_truth.truth_summary
         (id TEXT, host_galaxy BIGINT, ra DOUBLE PRECISION, dec DOUBLE PRECISION,
         redshift REAL, is_variable INTEGER, is_pointsource INTEGER,
