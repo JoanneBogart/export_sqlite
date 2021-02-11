@@ -10,21 +10,37 @@
 
 1. From sqlite table schema make equivalent .sql file to create PostgreSQL table.  For now, do this by hand to ensure type names are correct. If original table has ra,dec columns, add a column of type `earth` to the PostgreSQL schema. All of this could perhaps be automated but if so review output.
 
-2. Create shell script to extract the data. It should contain environment variable definitions for input and output directories and one or more lines like
+Run it from psql.
 
-```bash
-sqlite -header -csv ${SRC_DIR}/sqlite_filename.db \
-"select * from in-table-name;" > ${OUT_DIR}/in-table-name.csv
+2. Write sql script to extract the data, to be executed from inside sqlite command program. Here is one for summary_truth:
+
+```sql
+.headers on
+.mode csv
+.mode quote
+select * from truth_summary;
+```
+Suppose the path to this file is  `/tool/path/extract.sql`, path to sqlite input file is `/input/path/sqlite_file.db` and path to output csv file is `/output/path/out_table.csv`. Then use it like this:
+```
+$ sqlite3 /input/path/sqlite_file.db
+sqlite> .output /output/path/out_table.csv
+sqlite> .read /tool/path/extract.sql
 ```
 3. Create .sql file to ingest the data from the created .csv file. For each table, need a command something like
 ```
-\copy pg-schema-name.pg-table-name (list-of-column-names) from 'csv-file-path' with (FORMAT 'csv', header)
+\copy pg-schema-name.pg-table-name (list-of-column-names) from '/output/path/out_table.csv' with csv header;
 ```
-4. Run the shell script and execute the .sql files from psql (or add lines to the shell script to invoke psql with the files as input)
+Run it from psql
 
-5. For tables with ra, dec columns (for truth tables, only truth_summary) update any values of type `earth`.
-
-6. Create indices as appropriate.
+4. For tables with ra, dec columns (for truth tables, only truth_summary) update any values of type `earth` with an sql command something like
+```
+update schema-name.table-name set coord=public.radec_to_coord(ra-col, dec-col);
+```
+e.g. for star truth
+```
+update star_truth.truth_summary set coord=public.radec_to_coord(ra, dec);
+```
+5. Create indices as appropriate.
 
 ## Validation
 Output should be identical to input except for differences in floating point numbers within tolerance.
