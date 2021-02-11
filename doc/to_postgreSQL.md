@@ -6,7 +6,7 @@
 * PostgreSQL schema name
 * PostgreSQL table name (defaults to sqlite tablename)
 
-## Creating the file
+## Creating the PostgreSQL schema
 
 1. From sqlite table schema make equivalent .sql file to create PostgreSQL table.  For now, do this by hand to ensure type names are correct. If original table has ra,dec columns, add a column of type `earth` to the PostgreSQL schema. All of this could perhaps be automated but if so review output.
 
@@ -26,6 +26,13 @@ $ sqlite3 /input/path/sqlite_file.db
 sqlite> .output /output/path/out_table.csv
 sqlite> .read /tool/path/extract.sql
 ```
+
+Alternatively, embed in shell script, e.g., assuming variables have been appropriately defined earlier in the script or in the environment before it was invoked
+
+```
+sqlite3 -header -csv -quote ${SRC_FILE} "select * from table_name;" > ${DEST_CSV}
+```
+
 3. Create .sql file to ingest the data from the created .csv file. For each table, need a command something like
 ```
 \copy pg-schema-name.pg-table-name (list-of-column-names) from '/output/path/out_table.csv' with csv header;
