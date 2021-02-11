@@ -1,0 +1,1 @@
+\copy agn_truth.agn_variability_truth (id, obsHistID, MJD, bandpass, delta_flux, num_photons) from '/global/cscratch1/sd/jrbogart/Run3.1i_truth/agntruth/agn_variability_truth.csv' with (FORMAT 'csv', header)
