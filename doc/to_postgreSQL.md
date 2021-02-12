@@ -53,6 +53,8 @@ update star_truth.truth_summary set coord=public.radec_to_coord(ra, dec);
 ```
 5. Create indices as appropriate.
 
+Finally, for all schemas, all tables give read permission to user desc_dc2_drp_user
+
 ## Validation
 Output should be identical to input except for differences in floating point numbers within tolerance.
 
