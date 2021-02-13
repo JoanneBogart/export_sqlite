@@ -21,7 +21,6 @@ desc_dc2_drp=> \i my_create.sql;
 ```sql
 .headers on
 .mode csv
-.mode quote
 select * from truth_summary;
 ```
 Suppose the path to this file is  `/tool/path/extract.sql`, path to sqlite input file is `/input/path/sqlite_file.db` and path to output csv file is `/output/path/out_table.csv`. Then use it like this:
@@ -34,7 +33,7 @@ sqlite> .read /tool/path/extract.sql
 Alternatively, embed in shell script, e.g., assuming variables have been appropriately defined earlier in the script or in the environment before it was invoked
 
 ```
-sqlite3 -header -csv -quote ${SRC_FILE} "select * from table_name;" > ${DEST_CSV}
+sqlite3 -header -csv ${SRC_FILE} "select * from table_name;" > ${DEST_CSV}
 ```
 
 3. Create .sql file to ingest the data from the created .csv file. For each table, need a command something like
