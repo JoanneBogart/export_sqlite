@@ -33,7 +33,7 @@ def  _transpose(records, column_dict, schema, n_rec=None, verbose=False):
     return pa.Table.from_arrays(dat, schema=schema)
 
 def convert_sqlite_to_parquet(dbfile, pqfile, table,
-                              n_group=1, max_group_gbyte=3.0,
+                              n_group=1, max_group_gbyte=5.0,
                               order_by=None, dry=False, verbose=False ):
     '''
     Write a parquet file corresponding to contents of a table from an sqlite3 db.
