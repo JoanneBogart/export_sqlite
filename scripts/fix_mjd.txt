@@ -1,0 +1,73 @@
+alter table <variability_table> add column MJD_DOUBLE double;
+update <variability_table> set MJD_DOUBLE = MJD;
+alter table <variability_table> drop column MJD;
+alter table <variability_table> rename column MJD_DOUBLE to MJD;
+
+
+
+Alternately
+
+0. Note if table has any indexes
+
+1.  Create a new table in the file with the desired schema but no indexes
+
+  create table new_variability (id TEXT, obsHistID INT,
+      bandpass TEXT, delta_flux FLOAT, num_photons FLOAT, MJD DOUBLE);
+
+2. Insert content
+
+  insert into new_variability
+  (id, obsHistID, bandpass, delta_flux, num_photons, MJD)
+  select id, obsHistID, bandpass, delta_flux, num_photons, MJD
+       from lensed_sn_variability_truth;
+
+3. Drop original table
+   drop table lensed_sn_variability_truth;
+   ## this can be slow
+
+4. Rename new table
+   alter table new_variability rename to lensed_sn_variability_truth;
+
+5. If there were any indexes, create in new table
+
+----------
+
+Or maybe better, especially if file contains only the variability table
+
+0. Note if table has any indexes
+
+1. Open a new db file
+
+sqlite3
+
+sqlite3 attach 'lensed_sn_variability_truth.db_new' as new;
+
+2. Create table the corrected schema
+
+sqlite>
+
+  create table new.lensed_sn_variability_truth (id TEXT, obsHistID INT,
+      bandpass TEXT, delta_flux FLOAT, num_photons FLOAT, MJD DOUBLE);
+
+3. Connect to original file
+
+sqlite> attach lensed_sn_variability_truth_cat.db as old;
+
+4. Copy from old to new using select
+sqlite>  insert into new.lensed_sn_variability_truth
+  (id, obsHistID, bandpass, delta_flux, num_photons, MJD)
+  select id, obsHistID, bandpass, delta_flux, num_photons, MJD
+       from old.lensed_sn_variability_truth;
+
+5. If there are any other tables in the original file, those should also
+be copied to the new (using identical schema).
+
+6. sqlite> detach old;
+
+
+7.  Create indexes if any
+
+
+The advantage of the last method is the resulting file is of minimal size.
+Otherwise the "dropped" column or table is still in the file, just no longer
+reachable.

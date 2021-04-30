@@ -16,5 +16,5 @@ CREATE TABLE agn_truth.agn_auxiliary_info
         sf_i DOUBLE PRECISION, sf_z DOUBLE PRECISION, sf_y DOUBLE PRECISION);
 
 CREATE TABLE agn_truth.agn_variability_truth
-                  (id TEXT, obsHistID INTEGER, MJD REAL, bandpass TEXT,
+                  (id TEXT, obsHistID INTEGER, MJD DOUBLE, bandpass TEXT,
                   delta_flux REAL, num_photons REAL);
