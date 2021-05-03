@@ -1,6 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS dia_visits_matched;
 
-CREATE TABLE IF NOT EXISTS "processed_dia_dets" (
+CREATE TABLE IF NOT EXISTS dia_visits_matched.processed_dia_dets (
 "level_0" INTEGER,
   "index" INTEGER,
   "id" BIGINT,
@@ -46,17 +46,17 @@ CREATE TABLE IF NOT EXISTS "processed_dia_dets" (
   "DBid" TEXT,
   "subtracted" INTEGER
 );
--- CREATE INDEX "ix_processed_dia_dets_level_0"ON "processed_dia_dets" ("level_0");
-CREATE TABLE IF NOT EXISTS "processed_records" (
+-- CREATE INDEX ix_processed_dia_dets_level_0 ON dia_visits_matched.processed_dia_dets ("level_0");
+CREATE TABLE IF NOT EXISTS dia_visits_matched.processed_records (
 "DBid" TEXT,
   "len_diasrccat" REAL,
   "len_truthcat" REAL,
   "processed" INTEGER
 );
--- CREATE INDEX "ix_processed_records_DBid"ON "processed_records" ("DBid");
-CREATE TABLE IF NOT EXISTS "diasrc_cat" (
+-- CREATE INDEX ix_processed_records_DBid ON dia_visits_matched.processed_records ("DBid");
+CREATE TABLE IF NOT EXISTS dia_visits_matched.diasrc_cat (
 "index" INTEGER,
-  "id" INTEGER,
+  "id" BIGINT,
   "coord_ra" DOUBLE PRECISION,
   "coord_dec" DOUBLE PRECISION,
   "parent" INTEGER,
@@ -420,8 +420,8 @@ CREATE TABLE IF NOT EXISTS "diasrc_cat" (
   "match_ang_dist" REAL,
   "sn_id" TEXT
 );
--- CREATE INDEX "ix_diasrc_cat_index"ON "diasrc_cat" ("index");
-CREATE TABLE IF NOT EXISTS "truthsn_cat" (
+-- CREATE INDEX ix_diasrc_cat_index ON dia_visits_matched.diasrc_cat ("index");
+CREATE TABLE IF NOT EXISTS dia_visits_matched.truthsn_cat (
 "index" INTEGER,
   "id" TEXT,
   "host_galaxy" BIGINT,
@@ -448,8 +448,8 @@ CREATE TABLE IF NOT EXISTS "truthsn_cat" (
   "instFluxErr" REAL,
   "psf_eq_NA_px" REAL
 );
--- CREATE INDEX "ix_truthsn_cat_index"ON "truthsn_cat" ("index");
--- CREATE INDEX truthsncat_snid ON truthsn_cat (id);
--- CREATE INDEX truthsncat_inccd ON truthsn_cat (in_ccd);
--- CREATE INDEX truthsncat_id ON truthsn_cat (id);
--- CREATE INDEX idx_truthsncat_inccd_id ON truthsn_cat (in_ccd, id);
+-- CREATE INDEX ix_truthsn_cat_index ON dia_visits_matched.truthsn_cat ("index");
+-- CREATE INDEX truthsncat_snid ON dia_visits_matched.truthsn_cat (id);
+-- CREATE INDEX truthsncat_inccd ON dia_visits_matched.truthsn_cat (in_ccd);
+-- CREATE INDEX truthsncat_id ON dia_visits_matched.truthsn_cat (id);
+-- CREATE INDEX idx_truthsncat_inccd_id ON dia_visits_matched.truthsn_cat (in_ccd, id);

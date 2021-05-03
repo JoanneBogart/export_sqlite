@@ -19,13 +19,14 @@ case "${1}" in
 	table=processed_dia_dets
 	;;
     records)
-	table=process_records
+	table=processed_records
 	;;
     truthsn)
 	table=truthsn_cat
 	;;
     *)
-	echo "unknown case ${1}"
+	echo "Unknown value for required argument: ${1}"
+	echo "Recognized values are:  diasrc   dia_dets   records  truthsn"
 	return 0
 	;;
 esac
@@ -34,6 +35,6 @@ esac
 #  Has truth_summary and agn_auxiliary_info tables
 DEST_FILE=${DEST_DIR}/${table}.csv
 
-#sqlite3 -header -csv ${SRC_FILE} "select * from ${table};" > ${DEST_FILE}
+sqlite3 -header -csv ${SRC_FILE} "select * from ${table};" > ${DEST_FILE}
 echo Did sqlite3 -header -csv ${SRC_FILE} "select * from ${table};"
 echo with output redirected to  ${DEST_FILE}

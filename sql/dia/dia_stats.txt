@@ -1,0 +1,10 @@
+sqlite> .tables
+diasrc_cat          processed_dia_dets  processed_records   truthsn_cat
+sqlite> select count(id) from diasrc_cat;
+11135386
+sqlite> select count(id) from truthsn_cat;
+509869
+sqlite> select count(id) from processed_dia_dets;
+110394
+sqlite> select count(processed) from processed_records;
+116589
